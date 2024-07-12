@@ -1,0 +1,599 @@
+app:
+  description: ''
+  icon: "\U0001F916"
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: "ppt\u751F\u6210"
+workflow:
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: code
+      id: 1711067409646-source-1717916867969-target
+      source: '1711067409646'
+      sourceHandle: source
+      target: '1717916867969'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: iteration
+      id: 1717916867969-source-1717916955547-target
+      source: '1717916867969'
+      sourceHandle: source
+      target: '1717916955547'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1717916955547'
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1720720003964-source-1720720081209-target
+      source: '1720720003964'
+      sourceHandle: source
+      target: '1720720081209'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: iteration
+      id: 1717916955547-source-1720750909007-target
+      source: '1717916955547'
+      sourceHandle: source
+      target: '1720750909007'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: code
+      id: 1720750909007-source-1720747125908-target
+      source: '1720750909007'
+      sourceHandle: source
+      target: '1720747125908'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: code
+      id: 1720747125908-source-1720753907341-target
+      source: '1720747125908'
+      sourceHandle: source
+      target: '1720753907341'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: end
+      id: 1720753907341-source-1711068257370-target
+      source: '1720753907341'
+      sourceHandle: source
+      target: '1711068257370'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: "\u5F00\u59CB"
+        type: start
+        variables:
+        - label: "\u8F93\u5165\u6587\u672C"
+          max_length: null
+          options: []
+          required: true
+          type: paragraph
+          variable: input_text
+      dragging: false
+      height: 89
+      id: '1711067409646'
+      position:
+        x: -245.55193024525028
+        y: 306.5839839528644
+      positionAbsolute:
+        x: -245.55193024525028
+        y: 306.5839839528644
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1720751488843'
+          - body
+          variable: final
+        selected: false
+        title: "\u7ED3\u675F"
+        type: end
+      height: 89
+      id: '1711068257370'
+      position:
+        x: 3159.8296139413155
+        y: 206.509142383059
+      positionAbsolute:
+        x: 3159.8296139413155
+        y: 206.509142383059
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(input_text: str) -> str:\n    token_limit = 100\n    overlap\
+          \ = 10\n    chunk_size = int(token_limit * 6 * (4/3))\n\n        # Initialize\
+          \ variables\n    chunks = []\n    start_index = 0\n    text_length = len(input_text)\n\
+          \n    # Loop until the end of the text is reached\n    while start_index\
+          \ < text_length:\n        # If we are not at the beginning, adjust the start_index\
+          \ to ensure overlap\n        if start_index > 0:\n            start_index\
+          \ -= overlap\n\n        # Calculate end index for the current chunk\n  \
+          \      end_index = start_index + chunk_size\n        if end_index > text_length:\n\
+          \            end_index = text_length\n\n        # Add the current chunk\
+          \ to the list\n        chunks.append(input_text[start_index:end_index])\n\
+          \n        # Update the start_index for the next chunk\n        start_index\
+          \ += chunk_size\n\n    return {\n        \"chunks\": chunks,\n    }\n"
+        code_language: python3
+        dependencies: []
+        desc: 'token_limit = 1000
+
+          overlap = 100'
+        outputs:
+          chunks:
+            children: null
+            type: array[string]
+        selected: false
+        title: "\u4EE3\u7801\u6267\u884C"
+        type: code
+        variables:
+        - value_selector:
+          - '1711067409646'
+          - input_text
+          variable: input_text
+      height: 101
+      id: '1717916867969'
+      position:
+        x: 122.47267397969529
+        y: 284.8679564451352
+      positionAbsolute:
+        x: 122.47267397969529
+        y: 284.8679564451352
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        height: 203
+        iterator_selector:
+        - '1717916867969'
+        - chunks
+        output_selector:
+        - '1720720081209'
+        - text
+        output_type: array[string]
+        selected: false
+        startNodeType: knowledge-retrieval
+        start_node_id: '1720720003964'
+        title: "\u8FED\u4EE3"
+        type: iteration
+        width: 1289
+      height: 203
+      id: '1717916955547'
+      position:
+        x: 90.53251954508482
+        y: 216.6548786093678
+      positionAbsolute:
+        x: 90.53251954508482
+        y: 216.6548786093678
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 1289
+      zIndex: 1
+    - data:
+        desc: "\u805A\u5408\u6240\u6709\u5206\u6BB5\u7FFB\u8BD1"
+        selected: false
+        template: '{{ translated_text }}'
+        title: "\u6A21\u677F"
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1717916955547'
+          - output
+          variable: translated_text
+      height: 83
+      id: '1717917057450'
+      position:
+        x: 2091.6548384999455
+        y: 624.4527643359779
+      positionAbsolute:
+        x: 2091.6548384999455
+        y: 624.4527643359779
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: Dify
+        desc: ''
+        height: 150
+        selected: false
+        showAuthor: true
+        text: "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"\
+          mode\":\"normal\",\"style\":\"\",\"text\":\"\u4EE3\u7801\u8282\u70B9\u5C06\
+          \ input_text \u5206\u6210\u957F\u5EA6\u4E3A token_limit \u7684\u5757\u3002\
+          \u6BCF\u4E2A\u5757\u76F8\u4E92\u91CD\u53E0\uFF0C\u4EE5\u786E\u4FDD\u6587\
+          \u672C\u7684\u4E00\u81F4\u6027\u3002\",\"type\":\"text\",\"version\":1}],\"\
+          direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\"\
+          ,\"version\":1,\"textFormat\":0},{\"children\":[],\"direction\":\"ltr\"\
+          ,\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\"\
+          :0},{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\"\
+          :\"\",\"text\":\"\u4EE3\u7801\u8282\u70B9\u8F93\u51FA\u4E00\u4E2A\u7531\
+          \ input_texts \u5206\u6BB5\u6587\u672C\u7EC4\u6210\u7684\u6570\u7EC4 chunks\u3002\
+          \",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\
+          \",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0}],\"\
+          direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\"\
+          :1}}"
+        theme: blue
+        title: ''
+        type: ''
+        width: 371
+      height: 150
+      id: '1718990593686'
+      position:
+        x: 259.3026056936437
+        y: 451.6924912936374
+      positionAbsolute:
+        x: 259.3026056936437
+        y: 451.6924912936374
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 371
+    - data:
+        author: Dify
+        desc: ''
+        height: 107
+        selected: false
+        showAuthor: true
+        text: "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"\
+          mode\":\"normal\",\"style\":\"\",\"text\":\"\u904D\u5386\u4EE3\u7801\u8282\
+          \u70B9\u8F93\u51FA\u7684\u6240\u6709\u5143\u7D20\uFF0C\u5E76\u4F7F\u7528\
+          \u4E09\u6B65\u7FFB\u8BD1\u5DE5\u4F5C\u6D41\u7A0B\u7FFB\u8BD1\u6BCF\u4E2A\
+          \u5757\u3002\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"\
+          format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\"\
+          :0}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\"\
+          ,\"version\":1}}"
+        theme: blue
+        title: ''
+        type: ''
+        width: 310
+      height: 107
+      id: '1718991836605'
+      position:
+        x: 890.3911089342612
+        y: 572.7978843705687
+      positionAbsolute:
+        x: 890.3911089342612
+        y: 572.7978843705687
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 310
+    - data:
+        author: Dify
+        desc: ''
+        height: 134
+        selected: false
+        showAuthor: true
+        text: "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"\
+          mode\":\"normal\",\"style\":\"\",\"text\":\"\u907F\u514D\u628A token_limit\
+          \ \u8BBE\u7684\u8FC7\u9AD8\uFF0CGPT-4o\u7684\u6027\u80FD\u5728\u4E0A\u4E0B\
+          \u6587\u957F\u5EA6\u8F83\u957F\u65F6\u4F1A\u4E0B\u964D\u3002\",\"type\"\
+          :\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"start\",\"\
+          indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0},{\"children\"\
+          :[],\"direction\":\"ltr\",\"format\":\"start\",\"indent\":0,\"type\":\"\
+          paragraph\",\"version\":1,\"textFormat\":0},{\"children\":[{\"detail\":0,\"\
+          format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"\u5EFA\u8BAE\u4F7F\
+          \u7528\u4E0D\u8D85\u8FC71000\u4E2Atoken\u3002\",\"type\":\"text\",\"version\"\
+          :1}],\"direction\":\"ltr\",\"format\":\"start\",\"indent\":0,\"type\":\"\
+          paragraph\",\"version\":1,\"textFormat\":0}],\"direction\":\"ltr\",\"format\"\
+          :\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}"
+        theme: yellow
+        title: ''
+        type: ''
+        width: 355
+      height: 134
+      id: '1718991882984'
+      position:
+        x: -35.288747139530926
+        y: 81.78078860115801
+      positionAbsolute:
+        x: -35.288747139530926
+        y: 81.78078860115801
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 355
+    - data:
+        dataset_ids:
+        - eaca0808-2388-47ca-a2f5-dadcb8ded771
+        desc: ''
+        isInIteration: true
+        isIterationStart: true
+        iteration_id: '1717916955547'
+        query_variable_selector:
+        - '1717916955547'
+        - item
+        retrieval_mode: single
+        selected: false
+        single_retrieval_config:
+          model:
+            completion_params: {}
+            mode: chat
+            name: gpt-3.5-turbo
+            provider: openai
+        title: "\u77E5\u8BC6\u68C0\u7D22"
+        type: knowledge-retrieval
+      extent: parent
+      height: 91
+      id: '1720720003964'
+      parentId: '1717916955547'
+      position:
+        x: 117
+        y: 85
+      positionAbsolute:
+        x: 207.53251954508482
+        y: 301.6548786093678
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1001
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1720720003964'
+          - result
+        desc: ''
+        isInIteration: true
+        iteration_id: '1717916955547'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-3.5-turbo
+          provider: openai
+        prompt_template:
+        - id: cbb5d9de-29ca-4faa-83f9-c036c4c0e457
+          role: system
+          text: "<\u4EFB\u52A1>\n\u53C2\u8003\u77E5\u8BC6\u68C0\u7D22\u7ED3\u679C\u3002\
+            \u5BF9\u4EE5\u4E0B\u6587\u672C\u8FDB\u884C\u5F52\u7EB3\u603B\u7ED3\n<\u77E5\
+            \u8BC6>\n\u4F7F\u7528\u4EE5\u4E0B\u4E0A\u4E0B\u6587\u4F5C\u4E3A\u60A8\u6240\
+            \u5B66\u7684\u77E5\u8BC6\uFF0C\u5728<context></context> XML\u6807\u7B7E\
+            \u5185\u3002\n<context>\n{{#context#}}\n</context>\n\u56DE\u7B54\u7528\
+            \u6237\u65F6\uFF1A\n- \u5982\u679C\u4F60\u4E0D\u77E5\u9053\uFF0C\u5C31\
+            \u8BF4\u4F60\u4E0D\u77E5\u9053\u3002\n- \u5982\u679C\u4F60\u4E0D\u786E\
+            \u5B9A\u65F6\u4E0D\u77E5\u9053\uFF0C\u5C31\u8BF7\u6C42\u6F84\u6E05\u3002\
+            \n\u907F\u514D\u63D0\u53CA\u4F60\u662F\u4ECE\u4E0A\u4E0B\u6587\u4E2D\u83B7\
+            \u5F97\u7684\u4FE1\u606F\u3002\n\u5E76\u6839\u636E\u7528\u6237\u95EE\u9898\
+            \u7684\u8BED\u8A00\u56DE\u7B54\n"
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      extent: parent
+      height: 97
+      id: '1720720081209'
+      parentId: '1717916955547'
+      position:
+        x: 488.014398413394
+        y: 85
+      positionAbsolute:
+        x: 578.5469179584788
+        y: 301.6548786093678
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "\ndef main(contentList: list[str], titleList: list[str]) -> list[dict]:\n\
+          \    result = []\n    for title, content in zip(titleList, contentList):\n\
+          \        result.append({\"title\": title, \"content\": content})\n    return\
+          \ {\"result\":result}"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[object]
+        selected: false
+        title: "\u5408\u5E76\u7ED3\u679C"
+        type: code
+        variables:
+        - value_selector:
+          - '1717916955547'
+          - output
+          variable: contentList
+        - value_selector:
+          - '1720750909007'
+          - output
+          variable: titleList
+      height: 53
+      id: '1720747125908'
+      position:
+        x: 2038.0116026186383
+        y: 339.66818115908063
+      positionAbsolute:
+        x: 2038.0116026186383
+        y: 339.66818115908063
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        height: 202
+        iterator_selector:
+        - '1717916955547'
+        - output
+        output_selector:
+        - '1720750915829'
+        - text
+        output_type: array[string]
+        selected: false
+        startNodeType: llm
+        start_node_id: '1720750915829'
+        title: "\u8FED\u4EE3 2"
+        type: iteration
+        width: 377
+      height: 202
+      id: '1720750909007'
+      position:
+        x: 1524.9965629149583
+        y: 307.500475582063
+      positionAbsolute:
+        x: 1524.9965629149583
+        y: 307.500475582063
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 377
+      zIndex: 1
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1720750909007'
+          - item
+        desc: ''
+        isInIteration: true
+        isIterationStart: true
+        iteration_id: '1720750909007'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-3.5-turbo
+          provider: openai
+        prompt_template:
+        - id: 14030ec2-864c-4c6a-a965-9c151403f393
+          role: system
+          text: "\u5BF9\u4EE5\u4E0B\u7684\u6587\u672C\u603B\u7ED3\u4E00\u4E2A\u6807\
+            \u9898\uFF0C\u5B57\u6570\u4E0D\u8981\u8D85\u8FC710\u4E2A\u5B57\n<\u5F85\
+            \u6458\u8981\u7684\u6587\u672C>\n{{#1720750909007.item#}}\n<\u6458\u8981\
+            >"
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      extent: parent
+      height: 97
+      id: '1720750915829'
+      parentId: '1720750909007'
+      position:
+        x: 117
+        y: 85
+      positionAbsolute:
+        x: 1641.9965629149583
+        y: 392.500475582063
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1001
+    - data:
+        code: "def main(arg1: list[dict]) -> dict:\n    import requests\n\n    url\
+          \ = 'http://127.0.0.1:5000/process'\n\n    response = requests.post(url,\
+          \ json=arg1)\n\n    if response.status_code == 200:\n        print('Response:',\
+          \ response.json())\n    else:\n        print('Failed to send data:', response.status_code,\
+          \ response.text)\n\n    return {\n        \"result\": 'success',\n    }"
+        code_language: python3
+        dependencies:
+        - name: requests
+          version: ''
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: true
+        title: "\u53D1\u9001\u8BF7\u6C42"
+        type: code
+        variables:
+        - value_selector:
+          - '1720747125908'
+          - result
+          variable: arg1
+      height: 53
+      id: '1720753907341'
+      position:
+        x: 2398.3316052328223
+        y: 155.40674591833397
+      positionAbsolute:
+        x: 2398.3316052328223
+        y: 155.40674591833397
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -995.2636992956773
+      y: 254.28845199040717
+      zoom: 0.4550095144952822
